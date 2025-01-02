@@ -1,14 +1,11 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import Login from './commponent/Login'
+import HomePage from './commponent/HomePage'
 
 function App() {
 
   return (
     <>
-      <Login />
+     <HomePage/>
     </>
   )
 }

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { createContext, useReducer, useState } from "react"
 import {
     Button,
     Grid2 as Grid,
@@ -7,6 +7,9 @@ import {
     Input,
     TextField
 } from "@mui/material";
+import { DisplaySettings } from "@mui/icons-material";
+import UserProfile from "./UserProfile";
+import { User, UserReducer } from "../UserReducer";
 
 
 const style = {
@@ -20,29 +23,38 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
+const inithialUser:User={firstName:"israel",lastName:"israeli",address:"",email:"aaa@bbb.com",password:"12345",phon:12345}
 
 const HomePage = () => {
+    const UserContext = createContext(inithialUser);
     const [isLogin, setIsLogin] = useState(false)
     const [open, setOpen] = useState(false)
-
+    const [users, usersDispatch] = useReducer(UserReducer, [] as User[])
+    let myUser:User=users[0]
 
     return (
         <>
+        <UserContext.Provider value={inithialUser}>
+            {/* <UserProfile /> */}
             <Grid container>
                 <Grid size={4}>
                     {!isLogin ?
-                        <Button color="primary" variant="contained" onClick={() => setOpen(!open)}>Login</Button> :
-                        'Logged In'}
+                        <Button color="primary" variant="outlined" onClick={() => setOpen(true)}>Login</Button> :
+                        <UserProfile />}
                 </Grid>
             </Grid>
             <Modal open={open} onClose={() => setOpen(false)}>
-                <Box sx={style}>
-                    <TextField label='userName' />
-                    <Button onClick={() => {
-                        setOpen(false); setIsLogin(true)
-                    }}>Login</Button>
+                <Box sx={style} >
+                    <TextField label='UserName' />
+                    <TextField label='Email' type="email"/>
+                    <TextField label='Password' type="password"/>
+                    <br />
+                    <Button onClick={() => { setOpen(false); setIsLogin(true) }}>
+                        Login
+                    </Button>
                 </Box>
             </Modal>
+        </UserContext.Provider >
         </>
     )
 

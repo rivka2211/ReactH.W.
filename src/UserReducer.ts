@@ -7,12 +7,12 @@ export type User={
    phon:number
 }
 
-type Action = {
+ type Action = {
     type: 'ADD' | 'REMOVE'|'GET'|'UPDATE',
     data: Partial<User> | number
 }
 
-export const userReducer=(state:User[],action:Action):User[]=>{
+export const UserReducer=(state:User[],action:Action):User[]=>{
 const{firstName,lastName,email,password,address,phon}=action.data as Partial<User>
 switch (action.type) {
     case 'ADD':
