@@ -3,7 +3,7 @@ import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import { useContext } from 'react';
 import { Tooltip } from '@mui/material';
-import { User } from '../UserReducer';
+import { User, UserContext } from '../UserReducer';
 import UpdateDetails from './UpdateDetails';
 
 function stringToColor(string: string) {
@@ -37,10 +37,8 @@ function stringAvatar(name: string) {
 
 export default function UserProfile() {
 
-// const user:User=useContext(UserContext)
-const user:User={firstName:"israel",lastName:"israeli",address:"",email:"aaa@bbb.com",password:"12345",phon:12345}
-
-const userName=user.firstName+" "+user.lastName
+ const {user}=useContext(UserContext)
+ const userName = `${user.firstName} ${user.lastName}`;
   return (
       <>
       <Tooltip title={userName}>

@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { DisplaySettings } from "@mui/icons-material";
 import UserProfile from "./UserProfile";
-import { User, UserReducer } from "../UserReducer";
+import { initialUser, User, UserContext, UserReducer } from "../UserReducer";
 
 
 const style = {
@@ -23,38 +23,37 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-const inithialUser:User={firstName:"israel",lastName:"israeli",address:"",email:"aaa@bbb.com",password:"12345",phon:12345}
 
 const HomePage = () => {
-    const UserContext = createContext(inithialUser);
+    // const UserContext = createContext(inithialUser);
     const [isLogin, setIsLogin] = useState(false)
     const [open, setOpen] = useState(false)
-    const [users, usersDispatch] = useReducer(UserReducer, [] as User[])
-    let myUser:User=users[0]
+    // const [users, usersDispatch] = useReducer(UserReducer, [] as User[])
+    const [user, setUser] = useState<User>(initialUser);
 
     return (
         <>
-        <UserContext.Provider value={inithialUser}>
-            {/* <UserProfile /> */}
-            <Grid container>
-                <Grid size={4}>
-                    {!isLogin ?
-                        <Button color="primary" variant="outlined" onClick={() => setOpen(true)}>Login</Button> :
-                        <UserProfile />}
+            <UserContext.Provider value={{user,setUser}}>
+                {/* <UserProfile /> */}
+                <Grid container>
+                    <Grid size={4}>
+                        {!isLogin ?
+                            <Button color="primary" variant="outlined" onClick={() => setOpen(true)}>Login</Button> :
+                            <UserProfile />}
+                    </Grid>
                 </Grid>
-            </Grid>
-            <Modal open={open} onClose={() => setOpen(false)}>
-                <Box sx={style} >
-                    <TextField label='UserName' />
-                    <TextField label='Email' type="email"/>
-                    <TextField label='Password' type="password"/>
-                    <br />
-                    <Button onClick={() => { setOpen(false); setIsLogin(true) }}>
-                        Login
-                    </Button>
-                </Box>
-            </Modal>
-        </UserContext.Provider >
+                <Modal open={open} onClose={() => setOpen(false)}>
+                    <Box sx={style} > <Grid container rowSpacing={1} >
+                        <TextField label='UserName' />
+                        <TextField label='Email' type="email" />
+                        <TextField label='Password' type="password" />
+                        <Grid size={6}>
+                            <Button onClick={() => { setOpen(false); setIsLogin(true) }}> Login  </Button>
+                        </Grid>
+                    </Grid>
+                    </Box>
+                </Modal>
+            </UserContext.Provider >
         </>
     )
 

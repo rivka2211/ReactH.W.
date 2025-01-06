@@ -1,3 +1,5 @@
+import { createContext } from "react"
+
 export type User={
    firstName:string,
    lastName:string,
@@ -6,11 +8,26 @@ export type User={
    address:string,
    phon:number
 }
+export const initialUser: User = {
+  firstName: "israel",
+  lastName: "israeli",
+  address: "",
+  email: "aaa@bbb.com",
+  password: "12345",
+  phon: 12345,
+}
+
 
  type Action = {
     type: 'ADD' | 'REMOVE'|'GET'|'UPDATE',
     data: Partial<User> | number
 }
+
+export const UserContext = createContext<{ user: User; setUser: CallableFunction;}> ({
+      user: initialUser,
+      setUser: () => {console.log("in set user in user context");
+      },
+  });
 
 export const UserReducer=(state:User[],action:Action):User[]=>{
 const{firstName,lastName,email,password,address,phon}=action.data as Partial<User>

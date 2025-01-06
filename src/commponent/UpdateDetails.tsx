@@ -1,6 +1,6 @@
 import { Box, Button, Grid2 as Grid, Modal, TextField } from "@mui/material";
-import { ChangeEvent, useState } from "react";
-import { User } from "../UserReducer";
+import { ChangeEvent, useContext, useState } from "react";
+import { User, UserContext } from "../UserReducer";
 
 const style = {
   position: 'absolute',
@@ -13,38 +13,40 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-
 const UpdateDetails = () => {
-  const [open, setOpen] = useState(false)
-  const myUser: User = { firstName: "israel", lastName: "israeli", address: "", email: "aaa@bbb.com", password: "12345", phon: 12345 }
-  const [formData, setFormData] = useState<User>(myUser)
+  const { user, setUser } = useContext(UserContext);
+  const [open, setOpen] = useState(false);
+  const [formData, setFormData] = useState(user);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target
-    setFormData({ ...formData, [id]: value })  //{name:'',phone:'',name'G'} => {name:'G',phone:''}     
-  }
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
+  };
+
+  const handleUpdate = () => {
+    setUser(formData);
+    setOpen(false);
+  };
+
   return (
     <>
-    <Grid container>
-      <Grid size={4}>
-        <Button color="primary" variant="outlined" onClick={() => setOpen(true)}>Update Details</Button>
-      </Grid>
-    </Grid>
+      <Button color="primary" variant="outlined" onClick={() => setOpen(true)}>Update Details</Button>
       <Modal open={open} onClose={() => setOpen(false)}>
-          <Box sx={style} component="form">
-          <TextField id="firstName" label='First Name' defaultValue={myUser.firstName} onChange={handleChange}/>
-          <TextField id="lastName" label='Last Name' defaultValue={myUser.lastName}onChange={handleChange}/>
-          <TextField id="email" label='Email' defaultValue={myUser.email}onChange={handleChange} type="email"/>
-          <TextField id="address" label='Address' defaultValue={myUser.address}onChange={handleChange}/>
-          <TextField id="password" label='Password' defaultValue={myUser.password}onChange={handleChange} type="password"/>
-          <TextField id="phon" label='Phon Number' defaultValue={myUser.phon}onChange={handleChange}/>
-          <div></div>
-            <Button onClick={() => { setOpen(false);} }>
-            Update
-            </Button>
-          </Box>
-        </Modal>
-      </>
+        <Box sx={style} component="form" >
+          <Grid container rowSpacing={1} >
+            <TextField id="firstName" label='First Name' defaultValue={user.firstName} onChange={handleChange} />
+            <TextField id="lastName" label='Last Name' defaultValue={user.lastName} onChange={handleChange} />
+            <TextField id="email" label='Email' defaultValue={user.email} onChange={handleChange} type="email" />
+            <TextField id="address" label='Address' defaultValue={user.address} onChange={handleChange} />
+            <TextField id="password" label='Password' defaultValue={user.password} onChange={handleChange} type="password" />
+            <TextField id="phon" label='Phon Number' defaultValue={user.phon} onChange={handleChange} />
+            <Grid size={6}>
+              <Button onClick={handleUpdate}> Update</Button>
+            </Grid>
+          </Grid>
+        </Box>
+      </Modal>
+    </>
   );
 }
 export default UpdateDetails
