@@ -1,6 +1,6 @@
 import { Box, Button, Grid2 as Grid, Modal, TextField } from "@mui/material";
 import { ChangeEvent, useContext, useState } from "react";
-import { User, UserContext } from "../UserReducer";
+import { UserContext } from "../UserReducer";
 
 const style = {
   position: 'absolute',
@@ -14,7 +14,7 @@ const style = {
   p: 4,
 };
 const UpdateDetails = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user, userDispatch } = useContext(UserContext);
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState(user);
 
@@ -24,8 +24,13 @@ const UpdateDetails = () => {
   };
 
   const handleUpdate = () => {
-    setUser(formData);
+    userDispatch({
+      type: 'ADD',
+      data: formData
+    })
     setOpen(false);
+    console.log("in handleUpdate");
+    console.log(user);
   };
 
   return (
@@ -39,7 +44,7 @@ const UpdateDetails = () => {
             <TextField id="email" label='Email' defaultValue={user.email} onChange={handleChange} type="email" />
             <TextField id="address" label='Address' defaultValue={user.address} onChange={handleChange} />
             <TextField id="password" label='Password' defaultValue={user.password} onChange={handleChange} type="password" />
-            <TextField id="phon" label='Phon Number' defaultValue={user.phon} onChange={handleChange} />
+            <TextField id="phone" label='phone Number' defaultValue={user.phone} onChange={handleChange} />
             <Grid size={6}>
               <Button onClick={handleUpdate}> Update</Button>
             </Grid>

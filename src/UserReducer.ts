@@ -1,60 +1,87 @@
-import { createContext } from "react"
+import { createContext, Dispatch } from "react"
+import { data } from "react-router-dom"
 
-export type User={
-   firstName:string,
-   lastName:string,
-   email:string,
-   password:string,
-   address:string,
-   phon:number
+export type User = {
+    id:number
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+    address: string,
+    phone: number
 }
 export const initialUser: User = {
-  firstName: "israel",
-  lastName: "israeli",
-  address: "",
-  email: "aaa@bbb.com",
-  password: "12345",
-  phon: 12345,
+    id:0,
+    firstName: "israel",
+    lastName: "israeli",
+    address: "",
+    email: "aaa@bbb.com",
+    password: "12345",
+    phone: 12345,
 }
 
 
- type Action = {
-    type: 'ADD' | 'REMOVE'|'GET'|'UPDATE',
+export type Action = {
+    type: 'ADD' | 'REMOVE' | 'GET' | 'UPDATE',
     data: Partial<User> | number
 }
 
-export const UserContext = createContext<{ user: User; setUser: CallableFunction;}> ({
-      user: initialUser,
-      setUser: () => {console.log("in set user in user context");
-      },
-  });
+export const UserContext = createContext<{ user: User; userDispatch: Dispatch<Action>; }>({
+    user: initialUser,
+    userDispatch: () => { }
+});
 
-export const UserReducer=(state:User[],action:Action):User[]=>{
-const{firstName,lastName,email,password,address,phon}=action.data as Partial<User>
-switch (action.type) {
-    case 'ADD':
-        return[
-            ...state,{firstName:firstName||" ",
-                    lastName:lastName||" ",
-                    email:email||" ",
-                    password:password||" ",
-                    address:address||" ",
-                    phon:phon||0
-            }
-        ]
-    case 'UPDATE':
-        // const{firstName ,lastName ,email ,password ,address ,phon }=action.data as Partial<User>
-        let myUser= state.filter(u=>u.email==email )[0]
-        myUser.firstName=firstName|| myUser.firstName ,
-        myUser.lastName=lastName||myUser.lastName ,
-        myUser.email=email||myUser.email ,
-        myUser.password=password|| myUser.password ,
-        myUser.address=address||myUser.address ,
-        myUser.phon=phon ||myUser.phon
-        return [myUser]
-        
-    default://get
-        const myEmail=action.data as string
-        return state.filter(u=>u.email==myEmail)
-}
+const URL="http://localhost:3000/api/user/"
+
+export const UserReducer =async (state: User, action: Action): Promise<User> => {
+    const { id,firstName, lastName, email, password, address, phone } = action.data as Partial<User>
+    switch (action.type) {
+        case 'ADD':
+                       const newUser={
+                        id:id||0,
+                        firstName:firstName||" ",
+                        lastName:lastName||" ",
+                        email:email||" ",
+                        password:password||" ",
+                        address:address||" ",
+                        phone:phone||0 }
+                        try{
+                            const res=await fetch(URL,{
+                            method:"POST",
+                            body:JSON.stringify(newUser),
+                            headers:{"user-id":newUser.id.toString(),"Content-Type": "application/json"}
+                        })
+                        console.log(await res.json);
+                        }catch (e) {
+                            console.error(e);
+                          }
+                     return newUser
+        case 'UPDATE':
+                state.firstName = firstName || state.firstName,
+                state.lastName = lastName || state.lastName,
+                state.email = email || state.email,
+                state.password = password || state.password,
+                state.address = address || state.address,
+                state.phone = phone || state.phone
+            console.log("in UserReducer>update");
+            console.log(state);
+            return state
+
+        default://get
+        const myId=action.data
+        try{
+            const res=await fetch(`${URL}${myId}`,{
+            method:"GET",
+            // body:JSON.stringify(newUser),
+            // headers:{"user-id":newUser.id.toString(),"Content-Type": "application/json"}
+        })
+        console.log(await res.json);
+        // return res.formData
+        // state= JSON.parse(res.)
+        }catch (e) {
+            console.error(e);
+        }
+         
+        return state
+    }
 }

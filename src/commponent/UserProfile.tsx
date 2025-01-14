@@ -1,9 +1,7 @@
-import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Tooltip } from '@mui/material';
-import { User, UserContext } from '../UserReducer';
+import { UserContext } from '../UserReducer';
 import UpdateDetails from './UpdateDetails';
 
 function stringToColor(string: string) {
@@ -34,17 +32,23 @@ function stringAvatar(name: string) {
     children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
   };
 }
-
+ 
 export default function UserProfile() {
 
- const {user}=useContext(UserContext)
- const userName = `${user.firstName} ${user.lastName}`;
+  const { user } = useContext(UserContext)
+  console.log(user);
+  useEffect(() => {
+    document.title = `Hello: ${user.firstName}`; 
+    console.log("User profile updated:", user);
+  }, [user]);
+  const userName = `${user.firstName} ${user.lastName}`;
   return (
-      <>
+    <>
       <Tooltip title={userName}>
-      <Avatar {...stringAvatar(userName)} />
-    </Tooltip>
-    <UpdateDetails />
+        <Avatar {...stringAvatar(userName)} />
+      </Tooltip>
+      <h2>Hellow {userName}!!</h2>
+      <UpdateDetails />
     </>
   );
 }

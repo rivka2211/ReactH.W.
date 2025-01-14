@@ -9,7 +9,7 @@ function App() {
   return (
     <>
      <HomePage/>
-     {/* <RouterProvider router={myRouter} /> */}
+     <RouterProvider router={myRouter} />
     </>
   )
 }
