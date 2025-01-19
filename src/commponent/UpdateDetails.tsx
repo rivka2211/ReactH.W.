@@ -2,7 +2,12 @@ import { Box, Button, Grid2 as Grid, Modal, TextField } from "@mui/material";
 import { ChangeEvent, useContext, useState } from "react";
 import { UserContext } from "../UserReducer";
 
-const style = {
+const styleBtn={
+  position: 'absolute',
+
+}
+
+const style1 = {
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -37,7 +42,7 @@ const UpdateDetails = () => {
     <>
       <Button color="primary" variant="outlined" onClick={() => setOpen(true)}>Update Details</Button>
       <Modal open={open} onClose={() => setOpen(false)}>
-        <Box sx={style} component="form" >
+        <Box sx={style1} component="form" >
           <Grid container rowSpacing={1} >
             <TextField id="firstName" label='First Name' defaultValue={user.firstName} onChange={handleChange} />
             <TextField id="lastName" label='Last Name' defaultValue={user.lastName} onChange={handleChange} />

@@ -1,6 +1,6 @@
 import Avatar from '@mui/material/Avatar';
 import { useContext, useEffect } from 'react';
-import { Tooltip } from '@mui/material';
+import { Box, Tooltip } from '@mui/material';
 import { UserContext } from '../UserReducer';
 import UpdateDetails from './UpdateDetails';
 
@@ -43,12 +43,12 @@ export default function UserProfile() {
   }, [user]);
   const userName = `${user.firstName} ${user.lastName}`;
   return (
-    <>
+    <Box sx={{position:'absolute',top:0,left:0, padding:'15px'}}>
       <Tooltip title={userName}>
         <Avatar {...stringAvatar(userName)} />
       </Tooltip>
       <h2>Hellow {userName}!!</h2>
       <UpdateDetails />
-    </>
+    </Box>
   );
 }
