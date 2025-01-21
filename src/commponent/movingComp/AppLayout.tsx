@@ -1,19 +1,34 @@
 // import { Link } from "react-router"
 // import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import NavBar from "./NavBar";
+import { Box } from "@mui/material";
 
 
 const AppLayout = () => {
-    return (<>
-        <h1 >AppLayout </h1>
-        <div style={{ border: "2px solide blue" }}>
-        <NavBar />
-        </div>
 
-        <div style={{ border: "4px solide red",backgroundColor:"blueviolet" }}>
+    const style = {
+        border: "2px solide blue",
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        padding: '15px'
+    }
+    const styleOut = {
+        top: "10%",
+        right: 0, border: "4px solide red",
+         backgroundColor: "blueviolet" ,
+        width:"100%"
+    }
+    return (<>
+      
+        <Box sx={style}>
+            <NavBar />
+        </Box>
+
+        <Box  sx={styleOut}>
             <Outlet />
-        </div>
+        </Box>
     </>)
 }
 

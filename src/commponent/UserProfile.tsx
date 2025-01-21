@@ -32,22 +32,23 @@ function stringAvatar(name: string) {
     children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
   };
 }
- 
+
 export default function UserProfile() {
 
-  const { user } = useContext(UserContext)
-  console.log(user);
+  const { user, userDispatch } = useContext(UserContext)
+  let myUser = userDispatch({ type: 'GET', data: 1 })
+  console.log(myUser);
   useEffect(() => {
-    document.title = `Hello: ${user.firstName}`; 
+    document.title = `Hello: ${user.firstName}`;
     console.log("User profile updated:", user);
   }, [user]);
   const userName = `${user.firstName} ${user.lastName}`;
   return (
-    <Box sx={{position:'absolute',top:0,left:0, padding:'15px'}}>
+    <Box sx={{ position: 'absolute', top: 0, left: 0, padding: '15px' }}>
       <Tooltip title={userName}>
         <Avatar {...stringAvatar(userName)} />
       </Tooltip>
-      <h2>Hellow {userName}!!</h2>
+      {/* <h2>Hellow {userName}!!</h2> */}
       <UpdateDetails />
     </Box>
   );
