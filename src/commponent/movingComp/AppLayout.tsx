@@ -3,6 +3,7 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "./NavBar";
 import { Box } from "@mui/material";
+import SideBar from "../SideBar";
 
 
 const AppLayout = () => {
@@ -23,13 +24,14 @@ const AppLayout = () => {
     return (<>
       
         <Box sx={style}>
-            <NavBar />
+            <SideBar/>
         </Box>
 
         <Box  sx={styleOut}>
             <Outlet />
         </Box>
     </>)
+
 }
 
 export default AppLayout

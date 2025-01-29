@@ -9,6 +9,7 @@ import {
 import UserProfile from "./UserProfile";
 import { initialUser, User, UserContext } from "../UserReducer";
 import UserAllDetails from "./UserAllDetails";
+import SideBar from "./SideBar";
 
 
 const boxStyle = {
@@ -100,6 +101,8 @@ const HomePage = () => {
                 </Modal>
                { logupOpen&&<UserAllDetails handleSubmit={handleLogup} text="LogUp"/>}
                
+               {/* <SideBar/> */}
+
             </UserContext.Provider >
         </>
     )
