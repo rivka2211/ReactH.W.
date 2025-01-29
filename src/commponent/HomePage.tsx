@@ -7,9 +7,9 @@ import {
     TextField
 } from "@mui/material";
 import UserProfile from "./UserProfile";
-import { initialUser, User, UserContext } from "../UserReducer";
+import { UserContext } from "../UserReducer";
 import UserAllDetails from "./UserAllDetails";
-import SideBar from "./SideBar";
+
 
 
 const boxStyle = {

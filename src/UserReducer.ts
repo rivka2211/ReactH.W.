@@ -1,25 +1,26 @@
 import { createContext, Dispatch } from "react";
 import axios from "axios";
-import { data } from "react-router-dom"
+import {User} from "./types";
+import { initialUser } from "./types";
 
-export type User = {
-    id: number,
-    firstName: string,
-    lastName: string,
-    email: string,
-    password: string,
-    address: string,
-    phone: number
-}
-export const initialUser: User = {
-    id:0,
-    firstName: "israel",
-    lastName: "israeli",
-    address: "",
-    email: "aaa@bbb.com",
-    password: "12345",
-    phone: 12345,
-}
+// export type User = {
+//     id: number,
+//     firstName: string,
+//     lastName: string,
+//     email: string,
+//     password: string,
+//     address: string,
+//     phone: number
+// }
+// export const initialUser: User = {
+//     id:0,
+//     firstName: "israel",
+//     lastName: "israeli",
+//     address: "",
+//     email: "aaa@bbb.com",
+//     password: "12345",
+//     phone: 12345,
+// }
 
 
 export type Action = {

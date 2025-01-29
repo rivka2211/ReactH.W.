@@ -1,4 +1,3 @@
-import React from "react";
 import {
     Box, Typography, Button, Container,
     Grid2 as Grid,
@@ -23,10 +22,10 @@ const Home = () => {
 
             {/* גריד תמונות */}
             <Grid container spacing={3} justifyContent="center">
-                {["Blintzes1.webp", "bred.webp","pasta.webp","chips.webp","veg.webp"].map((img, index) => (
-                    <Grid item xs={12} sm={4} key={index}>
+                {["Blintzes1.jpg", "bred.jpg","pasta.jpg","chips.jpg","chicken.jpg"].map((img, index) => (
+                    <Grid item component="div" xs={12} sm={4} key={index} >
                         <Card sx={{ borderRadius: 3, boxShadow: 3 }}>
-                            <CardMedia component="img" height="200" image={`/images/${img}`} alt="מתכון טעים" />
+                            <CardMedia component="img" height="200" image={`/images/${img}`} alt={img.split(".")[0]} />
                         </Card>
                     </Grid>
                 ))}

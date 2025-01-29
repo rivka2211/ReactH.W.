@@ -1,7 +1,6 @@
 // import { Link } from "react-router"
 // import React from "react";
 import { Outlet } from "react-router-dom";
-import NavBar from "./NavBar";
 import { Box } from "@mui/material";
 import SideBar from "../SideBar";
 
@@ -16,9 +15,9 @@ const AppLayout = () => {
         padding: '15px'
     }
     const styleOut = {
-        top: "10%",
+        // top: "10%",
         right: 0, border: "4px solide red",
-         backgroundColor: "blueviolet" ,
+        //  backgroundColor: "blueviolet" ,
         width:"100%"
     }
     return (<>
