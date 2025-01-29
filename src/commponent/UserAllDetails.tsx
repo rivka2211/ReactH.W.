@@ -15,7 +15,7 @@ const style1 = {
 };
 
 const UserAllDetails = ({ handleSubmit,text }: { handleSubmit: (data: any) => void ,text:string}) => {
-    const { user } = useContext(UserContext);
+    const { user,userDispatch } = useContext(UserContext);
     const [formData, setFormData] = useState(user);
     const [open, setOpen] = useState(true);
 
@@ -23,6 +23,15 @@ const UserAllDetails = ({ handleSubmit,text }: { handleSubmit: (data: any) => vo
         const { id, value } = e.target;
         setFormData({ ...formData, [id]: value });
     };
+const handleClick = () => {
+    userDispatch({
+        type: 'UPDATE',
+        data: formData
+    })
+    setOpen(false);
+    handleSubmit(formData);
+  };
+
     return (
         <Modal open={open} onClose={handleSubmit}>
             <Box sx={style1} component="form" >
@@ -35,7 +44,7 @@ const UserAllDetails = ({ handleSubmit,text }: { handleSubmit: (data: any) => vo
                     <TextField id="phone" label='phone Number' defaultValue={user.phone} onChange={handleChange} />
                     {/*size={6}*/}
                     <Grid >
-                        <Button onClick={() => { setOpen(false); handleSubmit(formData); }}> {text}</Button>
+                        <Button onClick={handleClick}> {text}</Button>
                     </Grid>
                 </Grid>
             </Box>

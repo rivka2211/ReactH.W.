@@ -1,8 +1,9 @@
-import { createContext, Dispatch } from "react"
+import { createContext, Dispatch } from "react";
+import axios from "axios";
 import { data } from "react-router-dom"
 
 export type User = {
-    id: number
+    id: number,
     firstName: string,
     lastName: string,
     email: string,
@@ -11,7 +12,7 @@ export type User = {
     phone: number
 }
 export const initialUser: User = {
-    id: 0,
+    id:0,
     firstName: "israel",
     lastName: "israeli",
     address: "",
@@ -31,8 +32,8 @@ export type Action = {
 // }>
 export const UserContext = createContext<{ user: User; userDispatch: Dispatch<Action>; }>({
     user: initialUser,
-    userDispatch: ():User|null => {
-       return null;
+    userDispatch: (): User | null => {
+        return null;
     }
 });
 
@@ -44,7 +45,7 @@ export const UserReducer = async (state: User, action: Action): Promise<User> =>
     switch (action.type) {
         case 'ADD':
             newUser = {
-                id: id || 0,
+                id: id ||Date.now(),
                 firstName: firstName || " ",
                 lastName: lastName || " ",
                 email: email || " ",
@@ -54,13 +55,16 @@ export const UserReducer = async (state: User, action: Action): Promise<User> =>
             }
             try {
                 //change using with "fetch to using with "axsios"
-                const res = await fetch(URL, {
-                    method: "POST",
+                const res = await axios.post(`${URL}/register`, {
                     body: JSON.stringify(newUser),
-                    headers: { "user-id": newUser.id.toString(), "Content-Type": "application/json" }
+                    // headers: { "user-id": newUser.id.toString(), "Content-Type": "application/json" }
                 })
-                console.log(res.json);
-            } catch (e) {
+                console.log(res.data);
+                console.log(res.data.id);
+                newUser.id = res.data.id
+            } catch (e: any) {
+                if (e.status === 400 || e.status === 401)
+                    console.error(e.response.data.message);
                 console.error(e);
             }
             return newUser
@@ -78,18 +82,22 @@ export const UserReducer = async (state: User, action: Action): Promise<User> =>
             console.log(state);
             try {
                 //change using with "fetch to using with "axsios"
-                const res = await fetch(URL, {
-                    method: "PUT",
+                const res = await axios.put(URL, {
+                    // method: "PUT",
                     body: JSON.stringify(newUser),
-                    headers: { "user-id": newUser.id.toString(), "Content-Type": "application/json" }
+                    // headers: { "user-id": newUser.id.toString(), "Content-Type": "application/json" }
                 })
-                console.log( res.json);
-            } catch (e) {
+                console.log(res.data);
+                newUser.id = res.data.id
+            } catch (e:any) {
+                if (e.status === 404 ){
+                    console.error(e.response.data.message);
+                    console.error("user not found,try to add user");
+                }
                 console.error(e);
             }
             return newUser
-            return state
-
+            
         default://get
             const myId = action.data
 
@@ -100,7 +108,7 @@ export const UserReducer = async (state: User, action: Action): Promise<User> =>
                     // headers:{"user-id":newUser.id.toString(),"Content-Type": "application/json"}
                 })
                 console.log(res.json);
-                state= JSON.parse(await res.json());
+                state = JSON.parse(await res.json());
                 // return state;
             } catch (e) {
                 console.error(e);

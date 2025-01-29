@@ -45,6 +45,8 @@ const HomePage = () => {
     const [logupOpen, setLogupOpen] = useState(false)
     const { user, userDispatch } = useContext(UserContext)
     userDispatch({ type: 'GET', data: 1 })
+    console.log(user);
+    
     // let currentUser:User =initialUser
     // console.log(user);
  
@@ -69,6 +71,7 @@ const HomePage = () => {
       // setOpen(false);
       console.log("in handleLogup");
       console.log("formdata",formData);
+      userDispatch({type: 'GET',data:formData.id})
       console.log("user",user);
     };
     return (
