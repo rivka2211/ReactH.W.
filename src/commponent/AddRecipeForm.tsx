@@ -15,7 +15,7 @@ const schema = yup.object().shape({
     ingredients: yup.array().of(yup.string()).required('Ingredients are required'),
     instructions: yup.string().required('Instructions are required'),
     image: yup.string().url('Invalid image URL').nullable(),
-}).required();
+});
 
 
 const AddRecipeForm = () => {
@@ -76,7 +76,7 @@ const AddRecipeForm = () => {
                 helperText={errors.description?.message}
                 sx={{ marginBottom: '16px' }}
             />
-            <Box sx={{ marginBottom: '16px' }}>
+            <Box sx={{ marginBottom: '16px',position: 'relative' }}>
                 <TextField
                     label={`Ingredient`}
                     variant="outlined"
@@ -86,13 +86,14 @@ const AddRecipeForm = () => {
                     helperText={errors.ingredients?.message}
                     sx={{ marginBottom: '8px' }}
                 />
+               <div></div>
                 <Button
                     variant="outlined"
                     color="primary"
-                    startIcon={<AddIcon />}
                     onClick={handleAddIngredient}
-                    title='Add Ingredient'>
-                </Button>
+                    title='Add Ingredient'
+                    // sx={{ position: 'absolute', bottom: -10, right: 0 ,width:"100%"}}
+                ><AddIcon/></Button>
             </Box>
 
             <TextField
@@ -102,6 +103,7 @@ const AddRecipeForm = () => {
                 error={!!errors.instructions}
                 helperText={errors.instructions?.message}
                 sx={{ marginBottom: '16px' }}
+                multiline
             />
             <TextField
                 label="Image URL"
