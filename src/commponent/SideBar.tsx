@@ -8,15 +8,18 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { Link } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import PersonIcon from '@mui/icons-material/Person';
+import { UserContext } from './UserReducer';
 
 export default function SideBar() {
     const [state, setState] = React.useState({
         right: false,
     });
+    const [user]=React.useContext(UserContext);
 
     const toggleDrawer =
         (open: boolean) =>
@@ -62,18 +65,27 @@ export default function SideBar() {
                 <ListItem key="Recipes" disablePadding>
                     <ListItemButton component={Link} to="/recipes">
                         <ListItemIcon>
-                            <RestaurantIcon />
+                            < MenuBookIcon/>
                         </ListItemIcon>
                         <ListItemText primary="Recipes" />
                     </ListItemButton>
                 </ListItem>
+               {user.id!=0&&(
+                <ListItem key="Add Recipe" disablePadding>
+                    <ListItemButton component={Link} to="/addrecipe">
+                        <ListItemIcon>
+                            <RestaurantIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Add Recipe" />
+                    </ListItemButton>
+                </ListItem>)}
             </List>
         </Box>
     );
 
     return (
         <div>
-            <Button onClick={toggleDrawer(true)}>Open Right</Button>
+            <Button onClick={toggleDrawer(true)}>Menu</Button>
             <Drawer
                 anchor="right"
                 open={state.right}

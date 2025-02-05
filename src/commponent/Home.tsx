@@ -1,7 +1,7 @@
 import {
     Box, Typography, Button, Container,
-    Grid2 as Grid,
-    Card, CardMedia
+    Card, CardMedia,
+    Grid2 as Grid
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -22,10 +22,10 @@ const Home = () => {
 
             {/* גריד תמונות */}
             <Grid container spacing={3} justifyContent="center">
-                {["Blintzes1.jpg", "bred.jpg","pasta.jpg","chips.jpg","chicken.jpg"].map((img, index) => (
-                    <Grid item component="div" xs={12} sm={4} key={index} >
+                {["Blintzes1", "bred", "pasta", "chips", "chicken","cake"].map((img, index) => (
+                    <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3}} key={index}>
                         <Card sx={{ borderRadius: 3, boxShadow: 3 }}>
-                            <CardMedia component="img" height="200" image={`/images/${img}`} alt={img.split(".")[0]} />
+                            <CardMedia component="img" height="200" image={`src/assets/images/${img}.jpg`} alt={img.split(".")[0]} />
                         </Card>
                     </Grid>
                 ))}

@@ -1,7 +1,7 @@
 import Avatar from '@mui/material/Avatar';
 import { useContext, useEffect } from 'react';
 import { Box, Tooltip } from '@mui/material';
-import { UserContext } from '../UserReducer';
+import { UserContext } from './UserReducer';
 import UpdateDetails from './UpdateDetails';
 
 function stringToColor(string: string) {
@@ -35,20 +35,17 @@ function stringAvatar(name: string) {
 
 export default function UserProfile() {
 
-  const { user, userDispatch } = useContext(UserContext)
-  let myUser = userDispatch({ type: 'GET', data: 1 })
-  console.log(myUser);
+  const [state] = useContext(UserContext)
   useEffect(() => {
-    document.title = `Hello: ${user.firstName}`;
-    console.log("User profile updated:", user);
-  }, [user]);
-  const userName = `${user.firstName} ${user.lastName}`;
+    document.title = `Hello: ${state.firstName}`;
+    console.log("User profile updated:", state);
+  }, [state]);
+  const userName = `${state.firstName} ${state.lastName}`;
   return (
     <Box sx={{ position: 'absolute', top: 0, left: 0, padding: '15px' }}>
-      <Tooltip title={userName}>
+      <Tooltip title={userName} style={{margin:"15px"}} arrow>
         <Avatar {...stringAvatar(userName)} />
       </Tooltip>
-      {/* <h2>Hellow {userName}!!</h2> */}
       <UpdateDetails />
     </Box>
   );
