@@ -6,6 +6,7 @@ import {
 import { initionalRecipe, Recipe, recipeStore } from './store/RecipeStore';
 import { useState } from "react";
 import RecipeDetails from "./RecipeDetails";
+import Typography from '@mui/material/Typography';
 
 const RecipeList = () => {
   // const recipes = recipeStore.getRecipes();
@@ -13,6 +14,9 @@ const RecipeList = () => {
 
   return (<>
     <Box>
+      <Typography variant="h3" fontWeight="bold" color="primary" sx={{margin:"20px"}}>
+        🌍 עולם המתכונים 🍽️
+      </Typography>
       <Grid container spacing={2}>
         {recipeStore.getRecipes().map((recipe) => (
           <Grid size={12} key={recipe.id} >
@@ -24,10 +28,10 @@ const RecipeList = () => {
       </Grid>
     </Box>
 
-<Box>
-<RecipeDetails recipe={currentRecipe} />   
-</Box>
-  </> );
+    <Box>
+      <RecipeDetails recipe={currentRecipe} />
+    </Box>
+  </>);
 };
 
 export default RecipeList;

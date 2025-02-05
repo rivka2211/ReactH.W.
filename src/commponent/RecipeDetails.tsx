@@ -8,14 +8,19 @@ import CloseIcon from '@mui/icons-material/Close';
 const RecipeDetails = ({ recipe }: { recipe: Recipe }) => {
   const [open, setOpen] = useState(false);
   const style = {
-    backgroundimage: `url(${recipe.image})`,
+    backgroundImage: `url(${recipe.image})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    height: '80vh', // or any other height you want 
+    // height: '80vh', // or any other height you want 
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
   }
+const titleStyle={
+  variant: "h5",
+   fontWeight: "bold" ,
+   color: "primary"
+}
 
   const handleImageClick = () => {
     setOpen(true);
@@ -33,17 +38,22 @@ const RecipeDetails = ({ recipe }: { recipe: Recipe }) => {
   return (
 
     <Box sx={style}  >
-      <Typography variant="h2">{recipe.title}</Typography>
+      <Typography variant="h4" sx={titleStyle}>{recipe.title}</Typography>
       <Card>
         <Box p={2} onClick={handleImageClick}>
           <Typography variant="body1">{recipe.description}</Typography>
-          {recipe.ingredients.length > 0 && <Typography variant="body2">Ingredients:</Typography>}
+          {recipe.ingredients.length > 0 && <Typography variant="body1" sx={titleStyle}>Ingredients:</Typography>}
           {recipe.ingredients.map((ingredient, index) => (
             <Typography key={index} variant="body2">
               {ingredient}
             </Typography>
           ))}
-          <Typography variant="body2">Instructions: {recipe.instructions}</Typography>
+          <Typography variant="body1" sx={titleStyle}>Instructions:</Typography>
+           {recipe.instructions.split("\n").map((instruction, index) => (
+            <Typography key={index} variant="body2">
+              {instruction}
+            </Typography>
+          ))}
         </Box>
       </Card>
       <Modal open={open} onClose={handleClose}>
